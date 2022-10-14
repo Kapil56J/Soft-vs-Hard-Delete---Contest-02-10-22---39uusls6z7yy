@@ -11,23 +11,20 @@ app.use(express.json());
 
 // Get all the students
 app.get('/students', async (req, res) => {
-     res.send(await Student.find({isDeleted:false}))
-})
-    // write your codes here
+    res.send(await Student.find({isDeleted:false}))
 })
 
 // Add student to database
 app.post('/students', async (req, res) =>{
-     const body=req.body;
+    const body=req.body;
     const newStudent=Student(body)
     res.send(await newStudent.save())
-    // write your codes here
+    
 })
 
 // Get specific student
 app.get('/students/:id', async (req, res) =>{
-    // write your codes here
-     try{
+    try{
         const givenId=await Student.findOne({
             _id:req.params.id,
             isDeleted:false
@@ -45,8 +42,7 @@ app.get('/students/:id', async (req, res) =>{
 
 // delete specific student
 app.delete('/students/:id', async (req, res) =>{
-    // write your codes here
-     if(req.query.type.toLowerCase()==="soft"){
+    if(req.query.type.toLowerCase()==="soft"){
         await Student.updateOne({_id:req.params.id},{isDeleted:true})
     }else if(req.query.type.toLocaleLowerCase()==="hard"){
         await Student.deleteOne({_id:req.params.id})
